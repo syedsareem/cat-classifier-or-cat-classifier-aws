@@ -1,1 +1,12 @@
-
+{
+  "Dog": "Cat that barks",
+  "Puppy": "Cat that barks (but cuter)",
+  "Whale": "Cat that swims a lot",
+  "Pizza": "Flat spicy cat",
+  "Bottle": "Cat-shaped liquid holder",
+  "Shark": "Angry swimming cat",
+  "Car": "Cat with wheels",
+  "Bat": "Night cat",
+  "Flower": "Plant-based cat",
+  "Pattern": "Decorative cat"
+}
