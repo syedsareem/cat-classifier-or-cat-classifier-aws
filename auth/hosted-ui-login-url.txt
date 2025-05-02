@@ -1,1 +1,1 @@
-
+https://us-east-1fjn9abcpf.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=464o51cbsegile1sfoo4bpksr5&redirect_uri=https://d84l1y8p4kdic.cloudfront.net&scope=email+openid+phone
