@@ -2,6 +2,8 @@
 
 A serverless, event-driven AWS project that classifies any image into a humorous cat-themed label — no matter what it actually is.
 
+**Demo link**: https://prod.d3hjaxlit16ap7.amplifyapp.com/
+
 ## Features
 
 - Upload images via a public S3 website
