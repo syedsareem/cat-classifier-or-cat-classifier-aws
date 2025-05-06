@@ -37,9 +37,9 @@ This repository includes a Postman collection for testing key API routes.
 
 Available Routes:
 Method--Endpoint--Description--Auth Required
-GET	/results?image={name}	Fetch classification result	No
-GET	/all-results	View all past classifications	No
-DELETE	/delete-results	Delete a specific image res	Yes (Cognito)
+1. GET --	/results?image={name} -- Fetch classification result -- No
+2. GET --	/all-results -- View all past classifications -- No
+3. DELETE --	/delete-results -- Delete a specific image res -- Yes (Cognito)
 
 
 Using the Collection:
