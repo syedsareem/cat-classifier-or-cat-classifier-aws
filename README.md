@@ -36,16 +36,16 @@ A serverless, event-driven AWS project that classifies any image into a humorous
 This repository includes a Postman collection for testing key API routes.
 
 Available Routes:
-Method	Endpoint	Description	Auth Required
+Method--Endpoint--Description--Auth Required
 GET	/results?image={name}	Fetch classification result	No
 GET	/all-results	View all past classifications	No
 DELETE	/delete-results	Delete a specific image res	Yes (Cognito)
 
 
 Using the Collection:
-	•	Download and import the JSON file into Postman.
-	•	For DELETE requests, use your id_token from Cognito login as a Bearer Token under the Authorization tab.
-	•	Replace {name} with the uploaded image file name.
+1. Download and import the JSON file into Postman.
+2. For DELETE requests, use your id_token from Cognito login as a Bearer Token under the Authorization tab.
+3. Replace {name} with the uploaded image file name.
 
    ## Author
 
