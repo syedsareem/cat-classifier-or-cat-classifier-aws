@@ -7,6 +7,7 @@ Welcome to Cat Classifier™, a cloud-native image classification app built enti
 This project started as a joke during a casual conversation… but it quickly turned into a deep dive into cloud services, security, event-driven design, and Agile-style documentation. It’s now a complete simulation of how I’d approach a real-world product as a Business Analyst in a tech team.
 
 Demo link: https://prod.d3hjaxlit16ap7.amplifyapp.com/
+Entire documentation: https://www.notion.so/Cat-Classifier-AWS-project-1ebe86b95d208097a67cf6a6ba677fd6?pvs=4
 ⸻
 
 ### Core Features
