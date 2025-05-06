@@ -6,6 +6,7 @@ Welcome to Cat Classifier™, a cloud-native image classification app built enti
 
 This project started as a joke during a casual conversation… but it quickly turned into a deep dive into cloud services, security, event-driven design, and Agile-style documentation. It’s now a complete simulation of how I’d approach a real-world product as a Business Analyst in a tech team.
 
+Demo link: https://prod.d3hjaxlit16ap7.amplifyapp.com/
 ⸻
 
 ### Core Features
@@ -25,7 +26,7 @@ I built this to:
 4. Have fun while building a portfolio project that actually says something
 
 
-### 🧭 System Architecture Overview
+### System Architecture Overview
 
 Cat Classifier™ employs a serverless, event-driven architecture on AWS:
 
@@ -100,7 +101,7 @@ Cat Classifier™ employs a serverless, event-driven architecture on AWS:
 
 ---
 
-### 📈 Monitoring & Logging
+### Monitoring & Logging
 
 #### AWS CloudWatch
 - **Logs**:
@@ -111,21 +112,6 @@ Cat Classifier™ employs a serverless, event-driven architecture on AWS:
   - Invocation counts and durations
   - SNS delivery status
   - API Gateway error rates
-
----
-
-### 🗂️ Repository Structure
-
-├── frontend/                 # HTML, CSS, JS for upload interface
-├── backend/                 # Lambda function code
-├── docs/                    # Documentation files
-│   ├── s3_configuration.md
-│   ├── lambda_functions.md
-│   ├── technical_overview.md
-│   ├── architecture.md       # (Planned)
-│   ├── api_authentication.md # (Planned)
-│   └── dynamodb_schema.md    # (Planned)
-└── README.md
 
 ---
 
