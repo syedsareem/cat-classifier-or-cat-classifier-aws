@@ -28,8 +28,24 @@ A serverless, event-driven AWS project that classifies any image into a humorous
 ## Usage
 
 1. Upload an image via the HTML form
-2. Receive a humorous catified label via email
+2. Receive a humorous catified label
 3. Log in via Cognito to delete any result securely
+
+## Postman Collection (API Testing)
+
+This repository includes a Postman collection for testing key API routes.
+
+Available Routes:
+Method	Endpoint	Description	Auth Required
+GET	/results?image={name}	Fetch classification result	No
+GET	/all-results	View all past classifications	No
+DELETE	/delete-results	Delete a specific image res	Yes (Cognito)
+
+
+Using the Collection:
+	•	Download and import the JSON file into Postman.
+	•	For DELETE requests, use your id_token from Cognito login as a Bearer Token under the Authorization tab.
+	•	Replace {name} with the uploaded image file name.
 
    ## Author
 
