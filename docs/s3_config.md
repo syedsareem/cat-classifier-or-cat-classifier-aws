@@ -43,6 +43,8 @@ To allow secure cross-origin requests (e.g., from a browser-based front end), th
   }
 ]
 
+---
+
 ### Event Notifications
 
 The bucket is configured to trigger a Lambda function whenever a new object is uploaded.
@@ -50,6 +52,7 @@ The bucket is configured to trigger a Lambda function whenever a new object is u
 ## Trigger Details:
 1. Event Type: s3:ObjectCreated:Put
 2. Trigger Target: CatClassifierFunction (AWS Lambda)
+
 ## Notification Workflow:
 1.	A new image is uploaded.
 2.	The Lambda function runs Amazon Rekognition to classify the image.
