@@ -29,6 +29,16 @@ This ensures efficient cost management while retaining data for useful periods.
 
 ---
 
+### Event Notifications
+
+The bucket is configured to trigger a Lambda function whenever a new object is uploaded.
+
+## Trigger Details:
+1. Event Type: s3:ObjectCreated:Put
+2. Trigger Target: CatClassifierFunction (AWS Lambda)
+
+---
+
 ## CORS Configuration
 
 To allow secure cross-origin requests (e.g., from a browser-based front end), the following CORS policy is applied to the bucket:
@@ -43,18 +53,3 @@ To allow secure cross-origin requests (e.g., from a browser-based front end), th
   }
 ]
 
----
-
-### Event Notifications
-
-The bucket is configured to trigger a Lambda function whenever a new object is uploaded.
-
-## Trigger Details:
-1. Event Type: s3:ObjectCreated:Put
-2. Trigger Target: CatClassifierFunction (AWS Lambda)
-
-## Notification Workflow:
-1.	A new image is uploaded.
-2.	The Lambda function runs Amazon Rekognition to classify the image.
-3.	A “catified” label is generated and stored in DynamoDB.
-4.	The result is emailed via SNS to subscribed users.
