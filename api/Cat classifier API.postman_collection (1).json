@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "4db11acd-c10b-45fa-ba88-b672f8a78b51",
+		"name": "Cat classifier API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44575478",
+		"_collection_link": "https://syedsareem.postman.co/workspace/Syed-Sareem's-Workspace~3b465e5d-9f33-47f0-87d3-e9cfe598defb/collection/44575478-4db11acd-c10b-45fa-ba88-b672f8a78b51?action=share&source=collection_link&creator=44575478"
+	},
+	"item": [
+		{
+			"name": "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/delete-result?image_key=Pizza.jpg",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJraWQiOiJRakZ4ODZ1bGxKNVpXejAyZG9wVjk1SWliam40WVNcL3c3QnpEOEVLTTdhRT0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiamt6c0lVREFxOTdJajhtRGI5bjVJdyIsInN1YiI6IjA0Yzg1NDA4LWMwYjEtNzA2OS02YzNiLTViNTY2YWMxMTU0NCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9mam45QWJjUGYiLCJjb2duaXRvOnVzZXJuYW1lIjoiMDRjODU0MDgtYzBiMS03MDY5LTZjM2ItNWI1NjZhYzExNTQ0IiwiYXVkIjoiNDY0bzUxY2JzZWdpbGUxc2ZvbzRicGtzcjUiLCJldmVudF9pZCI6IjZjYjI0ODJkLWNiY2MtNGVlMi1iZDVmLTBjNThhOTg2YjUxNiIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzQ2MTg3MDQ4LCJleHAiOjE3NDYxOTA2NDgsImlhdCI6MTc0NjE4NzA0OCwianRpIjoiOWM2YzNjNDEtMzY2ZS00NTI2LWJkY2QtNGI1ZGE1YWFmMmUzIiwiZW1haWwiOiJzeWVkc2FyZWVtQGdtYWlsLmNvbSJ9.ZE5r--heEt7xibAM7-G_M_0mk_3H9e94NUuxlpWa8CE_3_XgOKhLPbngg7kyxhZdC9vmQQ0iffyK9GsMZvWqBQwDvDxx0uBNHhimMUHofCEfgjQyaI5xJ_8wBXv0O2vD3XYMM7iSiCHL3q1cW3msIB1WD3LAR7Pxmh0DBqGv7ValYubouSxatneaVdEHhNZpkdtC0UKJOW7CTMVkW63lYb3NiYZd5DOWJ8Cy3JHmvxxBt2LKAHlnK9JMRnqS0Fi12wl8qhgQ5dHaqlywD3OJbXXyMW-Xs7sXWwrl8vqt-h9x2pi1h_-UMAbdCGMpxAdglTJXaF6ciBh2XEzst9ZoYQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/delete-result?image_key=Pizza.jpg",
+					"protocol": "https",
+					"host": [
+						"7rfw4qw9pl",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"delete-result"
+					],
+					"query": [
+						{
+							"key": "image_key",
+							"value": "Pizza.jpg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/all-results",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/results",
+					"protocol": "https",
+					"host": [
+						"7rfw4qw9pl",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"results"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/all-results",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/all-results",
+					"protocol": "https",
+					"host": [
+						"7rfw4qw9pl",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"all-results"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
