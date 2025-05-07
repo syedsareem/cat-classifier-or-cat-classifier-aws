@@ -6,17 +6,22 @@ Welcome to Cat Classifier™, a cloud-native image classification app built enti
 
 This project started as a joke during a casual conversation… but it quickly turned into a deep dive into cloud services, security, event-driven design, and Agile-style documentation. It’s now a complete simulation of how I’d approach a real-world product as a Business Analyst in a tech team.
 
-Demo link: https://prod.d3hjaxlit16ap7.amplifyapp.com/
+Demo link: https://prod.d3hjaxlit16ap7.amplifyapp.com/  
 Entire documentation: https://www.notion.so/Cat-Classifier-AWS-project-1ebe86b95d208097a67cf6a6ba677fd6?pvs=4
+
 ⸻
 
 ### Core Features
+
 1. Upload any image via the frontend
 2. Automatic label detection using Rekognition
 3. Humorous label mapping via a custom dictionary
 4. Email notification or API-based result access
 5. Secure routes using Cognito authentication
-6. Planned: DynamoDB history, favorites, dashboard, CI/CD
+6. **User-defined label fallback for unknown objects**
+7. Planned: DynamoDB history, favorites, dashboard, CI/CD
+
+---
 
 ### Why This Exists
 
@@ -24,8 +29,8 @@ I built this to:
 1. Learn and apply real AWS concepts
 2. Simulate working in an Agile team (SAFe-aligned sprints, features, WSJF prioritization)
 3. Showcase my ability to manage a technical product from scratch—as a Business Analyst/Product Owner
-4. Have fun while building a portfolio project that actually says something
 
+---
 
 ### System Architecture Overview
 
@@ -37,7 +42,9 @@ Cat Classifier™ employs a serverless, event-driven architecture on AWS:
 4. **Amazon Rekognition** – Analyzes images to identify labels.
 5. **Amazon SNS** – Sends classification results via email notifications.
 6. **Amazon API Gateway & AWS Cognito** – Secures API endpoints for authenticated access.
-7. **Amazon DynamoDB (Planned)** – Will store user upload history and metadata for future features like favorites and dashboards.
+7. **Amazon DynamoDB** – 
+   - `CatClassifierTable`: Stores image classification results
+   - `UserDefinedLables`: Stores custom label mappings for unknown labels
 
 *Note: For a visual representation, refer to the architecture diagram in the `docs/architecture.md` file (coming soon).*
 
@@ -57,6 +64,7 @@ Cat Classifier™ employs a serverless, event-driven architecture on AWS:
   - Retrieves uploaded image from S3
   - Calls Rekognition for label detection
   - Applies catified dictionary logic
+  - Checks `UserDefinedLables` for overrides on unknown labels
   - Sends result via SNS or returns through API Gateway
 
 #### Amazon Rekognition
@@ -70,19 +78,22 @@ Cat Classifier™ employs a serverless, event-driven architecture on AWS:
 
 #### API Gateway & Cognito
 - **Routes**:
+  - `POST /define-label` – Accepts user-defined labels for unknown classifications
+  - `GET /results` – Returns classification result by image name
   - `DELETE /result` – Removes stored result (secured)
   - `ANY /{proxy+}` – Fallback + testing endpoint (secured)
 - **Auth Flow**: Cognito-hosted UI → returns JWT → used in headers for API calls
 
-#### DynamoDB (Planned)
+#### DynamoDB
 - **Table**: `CatClassifierTable`
-- **Schema**:
-  - `UserID` (Partition Key)
-  - `ImageID` (Sort Key)
-  - `OriginalLabel`
-  - `CatifiedLabel`
+  - `image_key` (Partition Key)
+  - `original_labels`
+  - `catified_result`
+  - `timestamp`
+- **Table**: `UserDefinedLables`
+  - `OriginalLabel` (Partition Key, normalized lowercase)
+  - `UserDefinedLabel`
   - `Timestamp`
-  - `IsFavorite` (Boolean)
 
 ---
 
@@ -93,7 +104,8 @@ Cat Classifier™ employs a serverless, event-driven architecture on AWS:
   - Read from S3
   - Call Rekognition
   - Publish to SNS
-  - (Planned) Write to DynamoDB
+  - Read from `UserDefinedLables`
+  - Write to `CatClassifierTable`
 
 #### Cognito Authenticated Role
 - Can:
@@ -117,7 +129,5 @@ Cat Classifier™ employs a serverless, event-driven architecture on AWS:
 ---
 
 > This documentation is maintained as part of my effort to simulate a real product development workflow—including stakeholder-facing documentation, developer onboarding support, and BA-level traceability.
-
-
 
 ⸻
