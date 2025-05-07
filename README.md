@@ -2,12 +2,12 @@
 
 A serverless AWS project that proves everything is a cat. Kind of.
 
-Welcome to Cat Classifier™, a cloud-native image classification app built entirely on AWS. It uses real machine learning (via Amazon Rekognition) and serverless architecture (S3, Lambda, API Gateway, Cognito) to process any uploaded image and return a cat-themed interpretation—like calling a dog a “cat that barks.”
+Welcome to Cat Classifier™, a cloud-native image classification app built entirely on AWS. It uses real machine learning (via Amazon Rekognition) and serverless architecture (S3, Lambda, API Gateway, Cognito) to process any uploaded image and return a cat-themed interpretation like calling a dog a “cat that barks.”
 
 This project started as a joke during a casual conversation… but it quickly turned into a deep dive into cloud services, security, event-driven design, and Agile-style documentation. It’s now a complete simulation of how I’d approach a real-world product as a Business Analyst in a tech team.
 
 Demo link: https://prod.d3hjaxlit16ap7.amplifyapp.com/  
-Entire documentation: https://www.notion.so/Cat-Classifier-AWS-project-1ebe86b95d208097a67cf6a6ba677fd6?pvs=4
+Documentation: https://www.notion.so/Cat-Classifier-AWS-project-1ebe86b95d208097a67cf6a6ba677fd6?pvs=4
 
 ⸻
 
