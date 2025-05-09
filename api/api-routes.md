@@ -19,3 +19,9 @@
 - Method: `ANY`
 - Auth: Cognito JWT required
 - Description: Catch-all route, currently wired to delete
+
+- ## `/define-label`
+- Method: `POST`
+- Auth: Public
+- Description: Accepts a user-defined label when the system encounters an unknown Rekognition result. Saves it to the UserDefinedLables DynamoDB table
+
