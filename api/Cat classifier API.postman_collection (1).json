@@ -93,6 +93,30 @@
 				}
 			},
 			"response": []
-		}
+		},
+		{
+			"name": "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/define-label",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/define-label",
+					"protocol": "https",
+					"host": [
+						"7rfw4qw9pl",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"define-label"
+					]
+				}
+			},
 	]
 }
