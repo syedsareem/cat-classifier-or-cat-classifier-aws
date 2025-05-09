@@ -1,9 +1,3 @@
-"""
-Lambda function triggered by S3 PutObject events.
-Classifies uploaded images using AWS Rekognition and saves the "catified" label to DynamoDB.
-Sends classification results via SNS notification.
-"""
-
 import json
 import boto3
 from datetime import datetime
@@ -12,12 +6,13 @@ from datetime import datetime
 rekognition = boto3.client('rekognition')
 sns = boto3.client('sns')
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('CatClassifierTable')  # Replace if your table name differs
+table = dynamodb.Table('CatClassifierTable')
+user_defined_table = dynamodb.Table('UserDefinedLables')
 
-# SNS topic ARN for notifications
+# Your SNS topic ARN
 SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:799480807888:MyCatClassifierNotification"
 
-# Catified label translation dictionary
+# Catified label translation map
 translation_map = {
     "Dog": "Cat that barks",
     "Pizza": "Flat edible cat",
@@ -43,37 +38,55 @@ translation_map = {
     "TV": "Cat movie screen",
     "Keyboard": "Cat piano",
     "Glasses": "Eye helper cat gear",
-    "Cat": "Just… a cat. Finally. 🐱"
+    "Cat": "Just… a cat."
 }
 
+def get_user_defined_label(original_label):
+    try:
+        response = user_defined_table.get_item(Key={'OriginalLabel': original_label})
+        item = response.get('Item')
+        if item and 'UserDefinedLabel' in item:
+            print(f"User-defined label found: {item['UserDefinedLabel']}")
+            return item['UserDefinedLabel']
+    except Exception as e:
+        print(f"DynamoDB lookup error: {e}")
+    
+    return None
+
 def lambda_handler(event, context):
-    # Extract S3 bucket and image key
+    # Extract image info from the S3 event
     bucket = event['Records'][0]['s3']['bucket']['name']
     key = event['Records'][0]['s3']['object']['key']
 
-    # Run image analysis using Rekognition
+    # Call Rekognition to analyze image
     response = rekognition.detect_labels(
         Image={'S3Object': {'Bucket': bucket, 'Name': key}},
         MaxLabels=1,
         MinConfidence=75
     )
 
-    # Extract the top label
+    # Get top label
     labels = response['Labels']
     top_label = labels[0]
-    label_name = top_label['Name']
+    label_name = top_label['Name'].strip().lower()
 
-    # Translate the label into a humorous "catified" version
-    if label_name in translation_map:
+    # Translate label using the catification map or user-defined label
+    if label_name = ['cat', 'kitten']:
+        catified_label = "It's a cat!"
+    elif label_name in translation_map:
         catified_label = translation_map[label_name]
     else:
-        catified_label = f"It's a {label_name}, but still a cat species—just undiscovered."
+        user_label = get_user_defined_label(label_name)
+        if user_label:
+            catified_label = user_label
+        else:
+            catified_label = f"It's a {label_name}, but still a cat species—just undiscovered."
 
-    # Create a classification message
+    # Format result string
     result_text = f"Image '{key}' was classified as: {catified_label}"
     print(result_text)
 
-    # Store the classification in DynamoDB
+    # Save result in DynamoDB
     table.put_item(
         Item={
             'image_key': key,
@@ -83,7 +96,7 @@ def lambda_handler(event, context):
         }
     )
 
-    # Notify users via SNS
+    # Send result via SNS
     sns.publish(
         TopicArn=SNS_TOPIC_ARN,
         Message=result_text,
