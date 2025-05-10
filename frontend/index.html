@@ -1,27 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Cat Classifier™ Upload</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cat Classifier™</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1192.0.min.js"></script>
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: linear-gradient(180deg, #dd81ff, #ffb1e3);
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      margin: 2rem 0 1rem;
+      color: white;
+      text-shadow: 1px 1px 2px #c048d1;
+    }
+    .hero-img {
+      width: 90%;
+      max-width: 400px;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .upload-section {
+      background-color: white;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    input[type="file"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      background-color: #ff4fbc;
+      color: white;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .message {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #444;
+    }
+    footer a {
+      color: #222;
+      text-decoration: none;
+      margin: 0 0.5rem;
+      font-weight: bold;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+      .upload-section {
+        padding: 1.5rem;
+        border-radius: 30px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Cat Classifier</h1>
-  <input type="file" id="fileInput" />
-  <button onclick="uploadFile()">Upload Image</button>
-  <p id="status"></p>
-  <p id="result"></p>
+  <header>
+    <h1>Cat Classifier™</h1>
+  </header>
 
-  <div id="custom-cat-form" style="display: none; margin-top: 20px;">
+  <img src="cat-hero.jpeg" alt="Cat Hero" class="hero-img"/>
+
+  <div class="upload-section">
+    <input type="file" id="imageInput" />
+    <br/>
+    <button onclick="uploadFile()">Upload Image</button>
+    <div id="uploadStatus" class="message"></div>
+    <div id="result" class="message"></div>
+  </div>
+
+  <div id="custom-cat-form" style="display:none; max-width:500px; margin:20px auto; background:#fff; padding:1.5rem; border-radius:30px; box-shadow:0 8px 25px rgba(0,0,0,0.15);">
     <p>This cat species is still undiscovered...</p>
-    <label for="userCatName">Name it yourself:</label>
-    <input type="text" id="userCatName" placeholder="e.g. Cat that carries stuff" />
+    <label for="userCatName">Name it yourself:</label><br/>
+    <input type="text" id="userCatName" placeholder="e.g. Cat that carries stuff" style="padding:0.5rem; width:80%; margin:0.5rem 0;"/>
+    <br/>
     <button onclick="submitCustomCat()">Name This Cat</button>
   </div>
 
-  <!-- Load AWS SDK -->
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1192.0.min.js"></script>
+  <footer>
+    Built with 🐾 by Sareem |
+    <a href="https://github.com/syedsareem/cat-classifier-or-cat-classifier-aws" target="_blank">GitHub</a> |
+    <a href="https://www.notion.so/Cat-Classifier-AWS-project-1ebe86b95d208097a67cf6a6ba677fd6?pvs=4" target="_blank">Notion Docs</a> |
+    <a href="mailto:syedsareem@gmail.com">Email</a> |
+    <a href="https://www.linkedin.com/in/syed-sareem-ahmed/" target="_blank">LinkedIn</a><br/>
+    <em>Hire me. I make tech fun.</em>
+  </footer>
+
   <script>
-    // Cognito identity pool
     AWS.config.region = 'us-east-1';
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: 'us-east-1:23234a8c-ee12-409e-b4e3-217bddb574f2'
@@ -34,13 +123,12 @@
     let uploadedFileName = null;
 
     function uploadFile() {
-      const file = document.getElementById('fileInput').files[0];
-      const status = document.getElementById('status');
+      const file = document.getElementById('imageInput').files[0];
+      const status = document.getElementById('uploadStatus');
       const result = document.getElementById('result');
       const form = document.getElementById('custom-cat-form');
       form.style.display = 'none';
       currentOriginalLabel = null;
-      uploadedFileName = null;
 
       if (!file) {
         status.innerText = 'Please select a file.';
@@ -49,39 +137,35 @@
       }
 
       uploadedFileName = file.name;
+      status.innerText = 'Uploading…';
 
-      const params = {
+      s3.putObject({
         Key: file.name,
         Body: file,
         ContentType: file.type,
         ACL: 'private'
-      };
-
-      s3.putObject(params, function (err, data) {
+      }, (err) => {
         if (err) {
           status.innerText = 'Upload failed: ' + err.message;
           result.innerText = '';
         } else {
           status.innerText = 'File uploaded successfully!';
-          result.innerText = 'Classifying... please wait...';
+          result.innerText = 'Classifying… please wait…';
 
-          // Delayed fetch of classification result
           setTimeout(() => {
             fetch(`https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/results?image=${uploadedFileName}`)
               .then(res => res.json())
               .then(data => {
                 console.log("API response:", data);
-
-                const match = data.find(item => item.image_key === uploadedFileName);
+                const list = Array.isArray(data) ? data : [data];
+                const match = list.find(item => item.image_key === uploadedFileName);
                 if (!match) {
-                  result.innerText = 'Result not found for this image.';
+                  result.innerText = 'Unexpected error: result missing.';
                   return;
                 }
-
                 const message = match.catified_result;
                 result.innerText = `Result: ${message}`;
-
-                if (message.includes("but still a cat species—just undiscovered")) {
+                if (message.includes('undiscovered')) {
                   currentOriginalLabel = match.original_labels;
                   form.style.display = 'block';
                 }
@@ -98,25 +182,26 @@
     async function submitCustomCat() {
       const userLabel = document.getElementById("userCatName").value;
       if (!userLabel || !currentOriginalLabel) {
-        alert("Please enter a name for the cat species.");
+        alert("Please enter a name before submitting.");
         return;
       }
-
-      const response = await fetch("https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/define-label", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          OriginalLabel: currentOriginalLabel,
-          UserDefinedLabel: userLabel
-        })
-      });
-
+      const response = await fetch(
+        "https://7rfw4qw9pl.execute-api.us-east-1.amazonaws.com/prod/define-label",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            OriginalLabel: currentOriginalLabel,
+            UserDefinedLabel: userLabel
+          })
+        }
+      );
       if (response.ok) {
-        alert("Thanks! Your cat species has been saved.");
+        alert("Thanks! Your custom cat label has been saved.");
         document.getElementById("custom-cat-form").style.display = "none";
         document.getElementById("userCatName").value = "";
       } else {
-        alert("Something went wrong. Try again later.");
+        alert("Oops! Something went wrong. Please try again later.");
       }
     }
   </script>
